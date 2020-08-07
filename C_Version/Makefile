@@ -10,11 +10,11 @@
 
 CC           = gcc
 
-CFLAGSFUSE   = `pkg-config fuse --cflags`
+CFLAGSFUSE   = `pkg-config fuse --cflags --libs` -D_FILE_OFFSET_BITS=64
 LLIBSFUSE    = `pkg-config fuse --libs`
 LLIBSOPENSSL = -lcrypto
 
-CFLAGS = -c -g -Wall -Wextra
+CFLAGS = -c -g -Wall -Wextra 
 LFLAGS = -g -Wall -Wextra
 
 FUSE_EXAMPLES = fusehello fusexmp 
@@ -42,10 +42,10 @@ aes-crypt-util: aes-crypt-util.o aes-crypt.o
 	$(CC) $(LFLAGS) $^ -o $@ $(LLIBSOPENSSL)
 
 fusehello.o: fusehello.c
-	$(CC) $(CFLAGS) $(CFLAGSFUSE) $<
+	$(CC) $(CFLAGS) $< $(CFLAGSFUSE)
 
 fusexmp.o: fusexmp.c
-	$(CC) $(CFLAGS) $(CFLAGSFUSE) $<
+	$(CC) $(CFLAGS) $< $(CFLAGSFUSE)
 
 xattr-util.o: xattr-util.c
 	$(CC) $(CFLAGS) $<
